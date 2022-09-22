@@ -1,0 +1,9 @@
+FE/node_modules
+FE/package-lock.json
+BE/README.md
+BE/node_modules
+BE/Procfile
+BE/package-lock.json
+BE/.env
+FE/Notes.md
+BE/Tests
