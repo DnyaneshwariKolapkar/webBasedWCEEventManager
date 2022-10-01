@@ -55,7 +55,7 @@ const Mainpage = () => {
             <button className='btn-group__item'> Profile </button>
           </div>
         </nav>
-        <div>
+        <div className='placeevenly'>
           {
             calendar && calendar.map((event) => {
               return (

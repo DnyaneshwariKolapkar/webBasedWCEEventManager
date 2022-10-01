@@ -7,6 +7,11 @@
 
 body {
 	background: #f6f5f7;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.bodyloginpage {
+	background: #f6f5f7;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -25,7 +30,7 @@ h2 {
 	text-align: center;
 }
 
-p {
+.ploginpage {
 	font-size: 14px;
 	font-weight: 100;
 	line-height: 20px;
@@ -44,7 +49,7 @@ a {
 	margin: 15px 0;
 }
 
-button {
+.buttonloginpage {
 	border-radius: 20px;
 	border: 1px solid #1d094b;
 	background-color: #1d094b;
@@ -57,15 +62,15 @@ button {
 	transition: transform 80ms ease-in;
 }
 
-button:active {
+.buttonloginpage:active {
 	transform: scale(0.95);
 }
 
-button:focus {
+.buttonloginpage:focus {
 	outline: none;
 }
 
-button.ghost {
+.buttonloginpage.ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
 }
@@ -89,7 +94,7 @@ input {
 	width: 100%;
 }
 
-.container {
+.containerloginpage {
 	background-color: #fff;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 

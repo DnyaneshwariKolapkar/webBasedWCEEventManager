@@ -1,4 +1,10 @@
 
+.placeevenly {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: auto auto auto auto;
+  padding: 10px;
+}
 
 .card {
     /* Add shadows to create the "card" effect */
