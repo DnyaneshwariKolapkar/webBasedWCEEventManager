@@ -16,30 +16,29 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/users', async (req, res) => {
-    console.log(req.body);
     try{
         const user = new User(req.body);
-        // await user.generateAuthToken();
+        await user.generateAuthToken();
         const temp = new Temp({userID: user._id});
-        await temp.createRandomString();
+        await temp.createString();
         await user.save();
         await temp.save();
         const link = user._id + '/' + temp.randomstring;
-        sendEmail(link, user);
-        res.setHeader(200, {
-            'Content-Type': 'text/plain'
+        await sendEmail(link, user);
+        res.status(201);
+        res.send({
+            message: "User created",
         });
-        res.status(201).send({user, temp});
     }
     catch (error) {
-        console.log(error);
-        if(error.code === 11000) {
-            res.message = "Email already exists";
-            console.log(res.message);
-            res.status(401).send(res.message);
+        if(error.code === 11000){
+            res.status(400);
+            res.send("Email already exists");
         }
         else {
-            res.status(400).send('user not created');
+            res.status(400);
+
+            res.send(error);
         }
     }
 })
@@ -67,10 +66,9 @@ router.post('/login', async(req, res) => {
             const token = await user.generateAuthToken();
             myCache.del(user._id.toString());
             myCache.set(user._id.toString(), token);
-            res.status(201).send({user, token});
+            res.status(200).send({user, token});
         }
         else{
-            console.log('User not verified');
             res.status(400).send('User not verified');
         }
     }

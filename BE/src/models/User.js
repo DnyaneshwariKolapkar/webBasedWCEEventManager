@@ -133,7 +133,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 
 // create random string for mail verification
-tempSchema.methods.createRandomString = async function() {
+tempSchema.methods.createString = async function() {
     const temp = this;
     const string = crypto.randomBytes(4).toString('hex');
     temp.randomstring = string;

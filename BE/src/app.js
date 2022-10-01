@@ -7,7 +7,7 @@ const calendarRouter = require('./router/calendar');
 const cors = require('cors');
 
 require('./DB/db');
-app.use(express.json(), cors());
+app.use(express.json({ limit: "10kb" }), cors());
 
 app.use(userRouter, calendarRouter);
 

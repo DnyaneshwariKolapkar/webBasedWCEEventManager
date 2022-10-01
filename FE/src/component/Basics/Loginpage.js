@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
-import useScript from "./script";
 import axios from "axios";
 
-
-const Loginpage = () => {
+const Loginpage = ({setRes}) => {
     const [inputName, setInputName] = useState("");
     const [inputEmail, setInputEmail] = useState("");
     const [inputPasswd, setInputPasswd] = useState(""); 
@@ -12,93 +10,80 @@ const Loginpage = () => {
     const [loginPasswd, setLoginPasswd] = useState("");
 
     const SubmitButton = async () => {
-        if (inputName && inputEmail && inputPasswd) {
-            try {
-                const userData = {
+        try {
+            if (inputName && inputEmail && inputPasswd) {
+                const user = {
                     name: inputName,
                     email: inputEmail,
-                    password: inputPasswd,
-                };
-                console.log(userData);
-                // await fetch ("http://localhost:5000/users", {
-                //     method: "POST",
-                //     headers: {
-                //         "Content-Type": "application/json"
-                //     },
-                //     body: JSON.stringify(userData),
-                // }).then((res) => {
-                //     console.log(res);
-                // });
-                await axios({
-                    method: 'post',
-                    url: 'http://localhost:5000/users',
-                    data: userData
-                })
-                .then((res) => {
-                    console.log(res);
-                });
-                alert("Registration Successful");
-            }
-            catch (err) {
-                console.log(err);
+                    password: inputPasswd
+                }
+                console.log(user);
+                const res = await axios.post("http://localhost:5000/users", user);
+                console.log(res.data);
+                if(res.status === 201) {
+                    alert("User created");
+                }
             }
         }
-        else {
-            alert("Please fill all the fields");
+        catch (err) {
+            console.log(err);
         }
     }
 
     const LoginButton = async () => {
-        if(loginEmail && loginPasswd){
-            try{
-                const user={
+        try {
+            if ( loginEmail && loginPasswd ) {
+                const user = {
                     email: loginEmail,
-                    password: loginPasswd,
+                    password: loginPasswd
                 }
                 console.log(user);
-                await fetch ("http://localhost:5000/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(user),
-                }).then((res) => {
-                    if(res.status === 200){
-                        console.log("Login Successful");
-                    }
-                    else{
-                        console.log("Login Failed");
-                    }
-                });
-            }
-            catch(err){
-
-                console.log('Errorrrrrrr ');
+                const res = await axios.post("http://localhost:5000/login", user);
+                console.log(res);
+                if(res.status === 200) {
+                    alert("Login successful");
+                    setRes(res.status);
+                }
             }
         }
+        catch (err) {
+            console.log(err);
+        }
     }
+
+    useEffect(() => {
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+    }, []);
 
     return (
         <>
             <h2>WCE Event Manager</h2>
             <div className="container" id="container">
                 <div className="form-container sign-up-container">
-                    <form>
+                    <form action="#">
                         <h1>Create Account</h1>
                         <input type="text" placeholder="Name" value = { inputName } onChange={(e) => setInputName(e.target.value)} />
                         <input type="email" placeholder="Email" value = { inputEmail } onChange={(e) => setInputEmail(e.target.value)} />
                         <input type="password" placeholder="Password" value ={ inputPasswd } onChange={(e) => setInputPasswd(e.target.value)} />
-                        <button onClick={ SubmitButton }>Sign Up</button>
+                        <button onClick = { SubmitButton } >Sign Up</button>
                     </form>
                 </div>
                 <div className="form-container sign-in-container">
-                    <form>
+                    <form action="#">
                         <h1>Sign in</h1>
                         <span>or use your account</span>
                         <input type="email" placeholder="Email" value={ loginEmail } onChange={(e) => setLoginName(e.target.value)} />
                         <input type="password" placeholder="Password" value={ loginPasswd } onChange={(e) => setLoginPasswd(e.target.value)}/>
                         <a href="https://www.google.com">Forgot your password?</a>
-                        <button onClick={ LoginButton } >Sign In</button>
+                        <button onClick={ LoginButton }>Sign In</button>
                     </form>
                 </div>
                 <div className="overlay-container">
@@ -116,7 +101,6 @@ const Loginpage = () => {
                     </div>
                 </div>
             </div>
-            {useScript()}
         </>
     );
 };

@@ -95,13 +95,13 @@ router.get('/getEvents', async (req, res) => {
             res.status(200).send(JSON.parse(events));
         }
         else{
-            let Date = await currDate();
-            console.log(Date);
-            console.log('from server');
-            const events = JSON.stringify(await Calendar.find( {date: {$gte: Date }}).sort({date: 1}));
-            myCache.set('events', events, 3600);
-            const data = myCache.get('events');
-            console.log(JSON.parse(data));
+            // let Date = currDate();
+            // console.log(Date);
+            // console.log('from server');
+            // const events = JSON.stringify(await Calendar.find( {date: {$gte: Date }}).sort({date: 1}));
+            const events = JSON.stringify(await Calendar.find().sort({date: 1}));
+            // myCache.set('events', events, 3600);
+            // const data = myCache.get('events');
             res.status(200).send(JSON.parse(events));
         }
     }

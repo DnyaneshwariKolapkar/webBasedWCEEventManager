@@ -1,10 +1,11 @@
 import React from 'react';
-import Loginpage from './component/Basics/Loginpage.js';
+// import Mainpage from './component/Basics/Mainpage';
+import Routes from './routes';
 
 const App = () => {
   return (
     <>
-      <Loginpage />
+      <Routes />
     </>
   );
 }
