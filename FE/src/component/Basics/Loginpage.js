@@ -67,7 +67,7 @@ const Loginpage = ({ setRes }) => {
         <>
             <div className="bodyloginpage">
                 <h2>WCE Event Manager</h2>
-                <div className="containerloginpage" id="container">
+                <div className="container" id="container">
                     <div className="form-container sign-up-container">
                         <form action="#">
                             <h1>Create Account</h1>
