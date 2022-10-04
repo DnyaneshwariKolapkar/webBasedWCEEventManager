@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import "./style.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Loginpage = ({ setRes }) => {
+const Loginpage = () => {
     const [inputName, setInputName] = useState("");
     const [inputEmail, setInputEmail] = useState("");
     const [inputPasswd, setInputPasswd] = useState("");
     const [loginEmail, setLoginName] = useState("");
     const [loginPasswd, setLoginPasswd] = useState("");
+    const navigate = useNavigate();
 
     const SubmitButton = async () => {
         try {
@@ -22,6 +24,7 @@ const Loginpage = ({ setRes }) => {
                 console.log(res.data);
                 if (res.status === 201) {
                     alert("User created");
+                    navigate("verificartionpage");
                 }
             }
         }
@@ -39,10 +42,13 @@ const Loginpage = ({ setRes }) => {
                 }
                 console.log(user);
                 const res = await axios.post("http://localhost:5000/login", user);
-                console.log(res);
+                console.log(res.data);
                 if (res.status === 200) {
                     alert("Login successful");
-                    setRes(res.status);
+                    navigate("/mainpage");
+                }
+                else {
+                    console.log(res);
                 }
             }
         }

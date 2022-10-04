@@ -63,13 +63,22 @@ router.post('/login', async(req, res) => {
         const check = await User.isUserVerified(req.body.email);
         if(check) {
             const user = await User.findByCredentials(req.body.email, req.body.password);
-            const token = await user.generateAuthToken();
-            myCache.del(user._id.toString());
-            myCache.set(user._id.toString(), token);
-            res.status(200).send({user, token});
+            if (user) {
+                const token = await user.generateAuthToken();
+                myCache.del(user._id.toString());
+                myCache.set(user._id.toString(), token);
+                res.status(200).send({user, token});
+            }
+            else {
+                res.status(400).send({
+                    error: "Invalid Credentials"    
+                });
+            }
         }
         else{
-            res.status(400).send('User not verified');
+            res.status(401).send({
+                error: "User not verified"
+            });
         }
     }
     catch (error) {

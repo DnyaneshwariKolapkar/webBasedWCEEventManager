@@ -104,7 +104,6 @@ userSchema.methods.generateAuthToken = async function() {
     const token = jwt.sign({_id: user._id}, process.env.SECRET_KEY);
     user.token = token;
     await user.save();
-    return token;
 }
 
 
@@ -138,7 +137,6 @@ tempSchema.methods.createString = async function() {
     const string = crypto.randomBytes(4).toString('hex');
     temp.randomstring = string;
     await temp.save();
-    return string;
 }
 
 

@@ -1,22 +1,18 @@
-import React, {useEffect} from 'react';
-import Loginpage from './component/Basics/Loginpage';
-import Mainpage from './component/Basics/Mainpage';
+import { React } from "react";
+import { Routes, Route } from "react-router-dom";
+import Loginpage from "./component/Basics/Loginpage";
+import Mainpage from "./component/Basics/Mainpage";
+import Verificartionpage from "./component/Basics/verificartionpage";
 
-const Routes = () => {
 
-    const [res, setRes] = React.useState('');
-    const [page, setPage] = React.useState(<Loginpage setRes = { setRes } />);
-    useEffect(() => {
-      if(res === 200) {
-        setPage(<Mainpage />);
-      }
-    }, [res]);
-
+const Router = () => {
   return (
-    <>
-        {page}
-    </>
+    <Routes>
+      <Route path="/" element={<Loginpage />} />
+      <Route path="/mainpage" element={<Mainpage />} />
+      <Route path="/verificartionpage" element={<Verificartionpage />} />
+    </Routes>
   )
 }
 
-export default Routes;
+export default Router
