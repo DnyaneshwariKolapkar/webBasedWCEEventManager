@@ -8,11 +8,12 @@ const NodeCache = require('node-cache');
 const myCache = new NodeCache()
 const setendtime = require('../middleware/setendtime');
 
-router.post('/insertevent/:token', auth, async (req, res) => {
+// router.post('/insertevent/:token', auth, async (req, res) => {
+router.post('/insertevent', auth, async (req, res) => {
     try{
-        const user = req.user;
-        const isAuthorized = await User.isAdminUser(user.id) || await User.isClubUser(user.id);
-        // const isAuthorized = false;
+        // const user = req.user;
+        // const isAuthorized = await User.isAdminUser(user.id) || await User.isClubUser(user.id);
+        const isAuthorized = true;
         if(isAuthorized){
             const calendar = new Calendar(req.body);
             calendar.createdBy = user.name;
@@ -102,7 +103,7 @@ router.get('/getEvents', async (req, res) => {
             const events = JSON.stringify(await Calendar.find().sort({date: 1}));
             // myCache.set('events', events, 3600);
             // const data = myCache.get('events');
-            res.status(200).send(JSON.parse(events));
+            res.status(200).send(events);
         }
     }
     catch (error) {
@@ -115,6 +116,17 @@ router.get('/resetcache', async (req, res) => {
     try{
         myCache.del('events');
         res.status(200).send('cache reset');
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).send(error);
+    }
+});
+
+router.get('/getEvents/:date', async (req, res) => {
+    try{
+        const events = await Calendar.find( {date: req.params.date});
+        res.status(200).send(events);
     }
     catch (error) {
         console.log(error);

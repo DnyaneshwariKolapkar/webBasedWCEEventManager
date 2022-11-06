@@ -3,7 +3,7 @@ import "./style.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Loginpage = () => {
+const Loginpage = ( {setUser} ) => {
     const [inputName, setInputName] = useState("");
     const [inputEmail, setInputEmail] = useState("");
     const [inputPasswd, setInputPasswd] = useState("");
@@ -23,8 +23,11 @@ const Loginpage = () => {
                 const res = await axios.post("http://localhost:5000/users", user);
                 console.log(res.data);
                 if (res.status === 201) {
-                    alert("User created");
-                    navigate("verificartionpage");
+                    setInputEmail("");
+                    setInputName("");
+                    setInputPasswd("");
+                    alert("User Created Successfully");
+                    navigate("/verificartionpage");
                 }
             }
         }
@@ -44,6 +47,7 @@ const Loginpage = () => {
                 const res = await axios.post("http://localhost:5000/login", user);
                 console.log(res.data);
                 if (res.status === 200) {
+                    // setUser(res.data);
                     alert("Login successful");
                     navigate("/mainpage");
                 }

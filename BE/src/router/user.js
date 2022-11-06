@@ -64,10 +64,11 @@ router.post('/login', async(req, res) => {
         if(check) {
             const user = await User.findByCredentials(req.body.email, req.body.password);
             if (user) {
-                const token = await user.generateAuthToken();
-                myCache.del(user._id.toString());
-                myCache.set(user._id.toString(), token);
-                res.status(200).send({user, token});
+                await user.generateAuthToken();
+                // myCache.del(user._id.toString());
+                // myCache.set(user._id.toString(), user.token);
+                res.cookie("JWT", "token", {httpOnly: true});
+                res.status(200).send({user});
             }
             else {
                 res.status(400).send({

@@ -1,0 +1,14 @@
+.insertformbody {
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	height: 100vh;
+    background: white;
+}
+
+.insertformbodyinput {
+    padding: 4%;
+    margin: 3%;
+}
