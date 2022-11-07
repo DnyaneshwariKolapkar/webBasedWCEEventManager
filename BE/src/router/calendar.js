@@ -9,15 +9,15 @@ const myCache = new NodeCache()
 const setendtime = require('../middleware/setendtime');
 
 // router.post('/insertevent/:token', auth, async (req, res) => {
-router.post('/insertevent', auth, async (req, res) => {
+router.post('/insertevent', async (req, res) => {
     try{
         // const user = req.user;
         // const isAuthorized = await User.isAdminUser(user.id) || await User.isClubUser(user.id);
         const isAuthorized = true;
         if(isAuthorized){
             const calendar = new Calendar(req.body);
-            calendar.createdBy = user.name;
-            calendar.endtime = setendtime(calendar.starttime, calendar.duration);
+            // calendar.createdBy = user.name;
+            // calendar.endtime = setendtime(calendar.starttime, calendar.duration);
             const checkIsAvailable = await Calendar.checkIsAvailable(calendar.date, calendar.starttime, calendar.endtime);
             if(checkIsAvailable) {
                 await calendar.save();

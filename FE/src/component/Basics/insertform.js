@@ -1,6 +1,8 @@
 import { React, useState } from 'react'
 import './insertform.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import TimePicker from 'react-time-picker';
 
 function Insertform( {eventDate} ) {
     const [eventName, setEventName] = useState('');
@@ -9,29 +11,30 @@ function Insertform( {eventDate} ) {
     const [startTime, setStartTime] = useState('');
     const [eventLocation, setEventLocation] = useState('');
     const [eventLink, setEventLink] = useState('');
-
+    const navigate = useNavigate();
 
     const SubmitButton = async () => {
         try {
             if(eventName && about && duration && startTime && eventLocation && eventLink) {
                 const newCalendar = {
                     eventname: eventName,
-                    about: about,
+                    description: about,
                     duration: duration,
                     starttime: startTime,
-                    eventlocation: eventLocation,
-                    eventlink: eventLink,
+                    location: eventLocation,
+                    link: eventLink,
                     date: eventDate
                 }
-                const res = await axios.post('http://localhost:5000/insertevent', { newCalendar });
+                const res = await axios.post('http://localhost:5000/insertevent',  newCalendar );
                 if(res.status === 200) {
                     alert('Event Added Successfully');
                     setEventName('');
                     setAbout('');
                     setDuration('');
-                    setStartTime('');
+                    setStartTime('');   
                     setEventLocation('');
                     setEventLink('');
+                    navigate('/daywiseevents');
                 }
             }
         }
@@ -40,13 +43,13 @@ function Insertform( {eventDate} ) {
         }
     }
 
-    
+    const [ time, setTime ] = useState('10:00');
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return (
         <>
             <div className='insertformbody'>
                 <div>
-                    <form action="#">
+                    <form onSubmit={SubmitButton} action=' '>
                         <h1>Book Slot on {eventDate.getDate().toString() + " " + month[eventDate.getMonth()] + " " + eventDate.getFullYear().toString()} </h1>
                         <br /><br />
                         <input className='insertformbodyinput' type="text" placeholder="Event Name" value={eventName} onChange={(e) => setEventName(e.target.value)} />
@@ -56,9 +59,10 @@ function Insertform( {eventDate} ) {
                         <input className='insertformbodyinput' type="text" placeholder="Event Link" value={eventLink} onChange={(e) => setEventLink(e.target.value)} />
                         <input className='insertformbodyinput' type="text" placeholder="Description" value={about} onChange={(e) => setAbout(e.target.value)} />
                         <br />
-                        <button type="submit" className='buttonloginpage' onClick={SubmitButton} >Submit</button>   
+                        <button type="submit" className='buttonloginpage' >Submit</button>   
                     </form>
                 </div>
+                <TimePicker value={time} onChange={(time) => setTime(time) } />
             </div>
         </>
     )

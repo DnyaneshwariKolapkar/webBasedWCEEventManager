@@ -26,7 +26,7 @@ const Router = () => {
         <Route path="verificartionpage" element={<Verificartionpage />} />
         <Route path="calendar" element={<Calendar params={setDate} />} />
       </Route>
-      <Route path="eventform" element={<DayWiseEvents eventDate={date} />} />
+      <Route path="daywiseevents" element={<DayWiseEvents eventDate={date} />} />
       <Route path="insertform" element={<Insertform eventDate={date} />} />
     </Routes>
   )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Calendar from 'react-calendar';
 import './calendar.css';
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ const Calender = ( { params } ) => {
                 <Calendar onChange={onChange} value={date} />
             </div>
             <div>{ date.toString() }</div>
-            <button className="addbutton" onClick={() => {Navigate("/eventform")}} >Get Schedule</button>
+            <button className="addbutton" onClick={() => {Navigate("/daywiseevents")}} >Get Schedule</button>
         </>
     )
 }

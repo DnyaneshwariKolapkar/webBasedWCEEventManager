@@ -7,14 +7,14 @@ const calendarSchema = new mongoose.Schema({
     },
     date: {
         required : true,
-        type: String,
+        type: Date,
     },
     starttime: {
         required : true,
         type: String,
     },
     endtime: {
-        required : true,
+        // required : true,
         type: String,
     },
     description: {
@@ -32,7 +32,7 @@ const calendarSchema = new mongoose.Schema({
         }
     }],
     mode: {
-        required : true,
+        // required : true,
         type: String,
     },
     location: {
@@ -50,7 +50,7 @@ const calendarSchema = new mongoose.Schema({
         required: true,
     },
     createdBy: {
-        required : true,
+        // required : true,
         type: String,
     },
 })

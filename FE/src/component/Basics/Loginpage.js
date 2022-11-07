@@ -79,23 +79,23 @@ const Loginpage = ( {setUser} ) => {
                 <h2>WCE Event Manager</h2>
                 <div className="container" id="container">
                     <div className="form-container sign-up-container">
-                        <form action="#">
+                        <div className="form">
                             <h1>Create Account</h1>
                             <input type="text" placeholder="Name" value={inputName} onChange={(e) => setInputName(e.target.value)} />
                             <input type="email" placeholder="Email" value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} />
                             <input type="password" placeholder="Password" value={inputPasswd} onChange={(e) => setInputPasswd(e.target.value)} />
                             <button onClick={SubmitButton} className="buttonloginpage" >Sign Up</button>
-                        </form>
+                        </div>
                     </div>
                     <div className="form-container sign-in-container">
-                        <form action="#">
+                        <div className="form">
                             <h1>Sign in</h1>
                             <span>or use your account</span>
                             <input type="email" placeholder="Email" value={loginEmail} onChange={(e) => setLoginName(e.target.value)} />
                             <input type="password" placeholder="Password" value={loginPasswd} onChange={(e) => setLoginPasswd(e.target.value)} />
                             <a href="https://www.google.com">Forgot your password?</a>
                             <button onClick={LoginButton} className="buttonloginpage" >Sign In</button>
-                        </form>
+                        </div>
                     </div>
                     <div className="overlay-container">
                         <div className="overlay">
