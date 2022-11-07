@@ -14,7 +14,7 @@ const Mainpage = () => {
             <button className='btn-group__item' onClick={() => {navigate("/mainpage")}}> All Events </button>
             <button className='btn-group__item'> Notifications </button>
             <button className='btn-group__item' onClick={() => navigate("calendar")}> Calendar </button>
-            <button className='btn-group__item'> Profile </button>
+            <button className='btn-group__item' onClick={() => navigate("Profile")}> Profile </button>
           </div>
         </nav>
         <Outlet />

@@ -8,6 +8,7 @@ import Eventpage from "./component/Basics/eventpage";
 import { useState } from "react";
 import DayWiseEvents from "./component/Basics/daywiseevents";
 import Insertform from "./component/Basics/insertform";
+import Profile from "./component/Basics/Profile";
 
 
 const Router = () => {
@@ -23,6 +24,7 @@ const Router = () => {
       <Route path="/" element={<Loginpage />} />
       <Route path="/mainpage" element={<Mainpage />} >
         <Route path="" element={<Eventpage />} />
+        <Route path="Profile" element={<Profile />} />
         <Route path="verificartionpage" element={<Verificartionpage />} />
         <Route path="calendar" element={<Calendar params={setDate} />} />
       </Route>

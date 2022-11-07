@@ -20,7 +20,7 @@ const Loginpage = ( {setUser} ) => {
                     password: inputPasswd
                 }
                 console.log(user);
-                const res = await axios.post("http://localhost:5000/users", user);
+                const res = await axios.post("http://localhost:5000/users", user); //integrating backend and frontend
                 console.log(res.data);
                 if (res.status === 201) {
                     setInputEmail("");

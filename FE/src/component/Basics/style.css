@@ -21,6 +21,10 @@ body {
 	margin: -20px 0 50px;
 }
 
+h3{
+	text-align: center;
+}
+
 h1 {
 	font-weight: bold;
 	margin: 0;
@@ -61,6 +65,21 @@ a {
 	text-transform: uppercase;
 	transition: transform 80ms ease-in;
 }
+
+.buttonprofile{
+	border-radius: 20px;
+	border: 1px solid #1d094b;
+	background-color: #1d094b;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
+
 
 .buttonloginpage:active {
 	transform: scale(0.95);
@@ -254,4 +273,13 @@ footer i {
 footer a {
     color: #3c97bf;
     text-decoration: none;
+}
+
+.profileinfobox {
+	background-color: blue;
+	color: #fff;
+	padding: 8px;
+	border-radius: 15px;
+	width: 200px;
+	text-align: start;
 }
