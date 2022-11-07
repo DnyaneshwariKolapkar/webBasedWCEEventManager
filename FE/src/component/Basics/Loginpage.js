@@ -78,15 +78,6 @@ const Loginpage = ( {setUser} ) => {
             <div className="bodyloginpage">
                 <h2>WCE Event Manager</h2>
                 <div className="container" id="container">
-                    <div className="form-container sign-up-container">
-                        <div className="form">
-                            <h1>Create Account</h1>
-                            <input type="text" placeholder="Name" value={inputName} onChange={(e) => setInputName(e.target.value)} />
-                            <input type="email" placeholder="Email" value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} />
-                            <input type="password" placeholder="Password" value={inputPasswd} onChange={(e) => setInputPasswd(e.target.value)} />
-                            <button onClick={SubmitButton} className="buttonloginpage" >Sign Up</button>
-                        </div>
-                    </div>
                     <div className="form-container sign-in-container">
                         <div className="form">
                             <h1>Sign in</h1>
@@ -95,6 +86,15 @@ const Loginpage = ( {setUser} ) => {
                             <input type="password" placeholder="Password" value={loginPasswd} onChange={(e) => setLoginPasswd(e.target.value)} />
                             <a href="https://www.google.com">Forgot your password?</a>
                             <button onClick={LoginButton} className="buttonloginpage" >Sign In</button>
+                        </div>
+                    </div>
+                    <div className="form-container sign-up-container">
+                        <div className="form">
+                            <h1>Create Account</h1>
+                            <input type="text" placeholder="Name" value={inputName} onChange={(e) => setInputName(e.target.value)} />
+                            <input type="email" placeholder="Email" value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} />
+                            <input type="password" placeholder="Password" value={inputPasswd} onChange={(e) => setInputPasswd(e.target.value)} />
+                            <button onClick={SubmitButton} className="buttonloginpage" >Sign Up</button>
                         </div>
                     </div>
                     <div className="overlay-container">
