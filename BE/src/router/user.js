@@ -68,7 +68,7 @@ router.post('/login', async(req, res) => {
                 // myCache.del(user._id.toString());
                 // myCache.set(user._id.toString(), user.token);
                 res.cookie("JWT", "token", {httpOnly: true});
-                res.status(200).send({user});
+                res.status(200).send(user);
             }
             else {
                 res.status(400).send({

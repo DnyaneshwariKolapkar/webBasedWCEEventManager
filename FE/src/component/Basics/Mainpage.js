@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
 const Mainpage = () => {
-
   const navigate = useNavigate();
-
   return (
     <>
       <div style={{backgroundColor:'#faf7f2'}}>
@@ -18,6 +16,7 @@ const Mainpage = () => {
           </div>
         </nav>
         <Outlet />
+        <button onClick={localStorage.removeItem("user")}>Log Out</button>
       </div>
     </>
   )

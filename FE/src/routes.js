@@ -20,6 +20,7 @@ const Router = () => {
   // console.log(date);
 
   return (
+    <>
     <Routes>
       <Route path="/" element={<Loginpage />} />
       <Route path="/mainpage" element={<Mainpage />} >
@@ -31,6 +32,7 @@ const Router = () => {
       <Route path="daywiseevents" element={<DayWiseEvents eventDate={date} />} />
       <Route path="insertform" element={<Insertform eventDate={date} />} />
     </Routes>
+    </>
   )
 }
 

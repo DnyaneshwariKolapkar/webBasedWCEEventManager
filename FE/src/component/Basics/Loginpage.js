@@ -48,6 +48,7 @@ const Loginpage = ( {setUser} ) => {
                 console.log(res.data);
                 if (res.status === 200) {
                     // setUser(res.data);
+                    localStorage.setItem("user", JSON.stringify(res.data));
                     alert("Login successful");
                     navigate("/mainpage");
                 }
