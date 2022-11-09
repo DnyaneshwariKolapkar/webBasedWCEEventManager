@@ -8,3 +8,6 @@ BE/.env
 FE/Notes.md
 BE/Tests
 FE/tests
+FE/dockerfile
+BE/dockerfile
+FE/.dockerignore
