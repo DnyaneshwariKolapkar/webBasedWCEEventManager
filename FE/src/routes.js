@@ -12,10 +12,7 @@ import Profile from "./component/Basics/Profile";
 
 
 const Router = () => {
-  // const navigate = useNavigate();
-  // const [ user, setUser ] = useState(JSON.parse(localStorage.getItem("user")));
   const [date, setDate] = useState(new Date(new Date().setHours(0,0,0,0)));
-  console.log(date);
 
   return (
     <>
@@ -30,9 +27,6 @@ const Router = () => {
       <Route path="daywiseevents" element={<DayWiseEvents eventDate={date} />} />
       <Route path="insertform" element={<Insertform eventDate={date} />} />
     </Routes>
-    {/* {
-      user ? navigate("/mainpage") : navigate("/loginpage")
-    } */}
     </>
   )
 }

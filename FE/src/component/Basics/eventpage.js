@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { React, useEffect, useState } from 'react'
 import axios from 'axios';
 import './mainpage.css';
 
@@ -37,14 +37,11 @@ const Eventpage = () => {
         getEvents();
     }, []);
 
-    const [calendar, setCalendar] = React.useState(null);
+    const [calendar, setCalendar] = useState(null);
 
     return (
         <>
             <div style={{ backgroundColor: '#faf7f2' }}>
-
-
-
                 <div className='placeevenly'>
                     {
                         calendar && calendar.map((event) => {

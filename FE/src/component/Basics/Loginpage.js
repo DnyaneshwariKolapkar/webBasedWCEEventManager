@@ -3,7 +3,7 @@ import "./style.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Loginpage = ( {setUser} ) => {
+const Loginpage = () => {
     const [inputName, setInputName] = useState("");
     const [inputEmail, setInputEmail] = useState("");
     const [inputPasswd, setInputPasswd] = useState("");
@@ -21,7 +21,6 @@ const Loginpage = ( {setUser} ) => {
                 }
                 console.log(user);
                 const res = await axios.post("http://localhost:5000/users", user); //integrating backend and frontend
-                console.log(res.data);
                 if (res.status === 201) {
                     setInputEmail("");
                     setInputName("");
