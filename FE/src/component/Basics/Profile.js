@@ -1,5 +1,6 @@
 import { React, useState } from 'react'
 import "./style.css";
+import { Images } from '../../constants/images.js';
 
 
 const Profile = () => {
@@ -12,7 +13,7 @@ const Profile = () => {
                 <div className="container" id="container">
                     {/* <div className="form-container sign-in-container"> */}
                         <div className="form">
-                        <img src="https://www.wce.ac.in/wp-content/uploads/2019/07/WCE-Logo-1.png" alt="WCE logo" />
+                        <img src={Images.tempImage} alt="WCE logo" style={{ width: "200px", height: "200px", borderRadius: "50%" }} />
                             <h3 className='profileinfobox'>{user.name}</h3>
                             <h3 className='profileinfobox'>{user.email}</h3>
                             <h3 className='profileinfobox'>{ }</h3>

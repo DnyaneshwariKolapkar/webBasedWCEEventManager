@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import axios from 'axios';
 import './mainpage.css';
+import { Images } from '../../constants/images';
 
 
 const Eventpage = () => {
@@ -12,7 +13,7 @@ const Eventpage = () => {
         return (
             <>
                 <div className="card" >
-                    <img src={"./images/temp.jpg"} alt="Avatar" style={{ width: "100%", borderRadius: "10px" }} />
+                    <img src={Images.tempImage} alt="Avatar" style={{ width: "100%", borderRadius: "10px" }} />
                     <div className="container1">
                         <h3><b>{event.eventname}</b></h3>
                         <p>On <b>{date}</b> at <b>{event.starttime}</b> for <b>{event.duration} Hr</b></p>

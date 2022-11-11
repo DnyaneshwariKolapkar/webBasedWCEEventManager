@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Images } from '../../constants/images.js';
 
 const DayWiseEvents = ({ eventDate }) => {
 
@@ -11,7 +12,7 @@ const DayWiseEvents = ({ eventDate }) => {
         return (
             <>
                 <div className="card" >
-                    <img src={"./images/temp.jpg"} alt="Avatar" style={{ width: "100%", borderRadius: "10px" }} />
+                    <img src={Images.tempImage} alt="Avatar" style={{ width: "100%", borderRadius: "10px" }} />
                     <div className="container1">
                         <h3><b>{event.eventname}</b></h3>
                         <p>On <b>{date}</b> at <b>{event.starttime}</b> for <b>{event.duration} Hr</b></p>
