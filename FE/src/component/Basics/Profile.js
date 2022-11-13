@@ -5,6 +5,7 @@ import { Images } from '../../constants/images.js';
 
 const Profile = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [photo, setPhoto] = useState();
   console.log(user);
   return (
     <>
@@ -13,7 +14,8 @@ const Profile = () => {
                 <div className="container" id="container">
                     {/* <div className="form-container sign-in-container"> */}
                         <div className="form">
-                        <img src={Images.tempImage} alt="WCE logo" style={{ width: "200px", height: "200px", borderRadius: "50%" }} />
+                        <input type="file" accept='image/*' onChange={(e) => setPhoto(e.target.files)} />
+                        <img src={photo} alt={<img src={Images.tempImage} />} style={{ width: "200px", height: "200px", borderRadius: "50%" }} />
                             <h3 className='profileinfobox'>{user.name}</h3>
                             <h3 className='profileinfobox'>{user.email}</h3>
                             <h3 className='profileinfobox'>{ }</h3>

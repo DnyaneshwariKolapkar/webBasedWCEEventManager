@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Images } from '../../constants/images.js';
 
 const DayWiseEvents = ({ eventDate }) => {
@@ -29,7 +29,7 @@ const DayWiseEvents = ({ eventDate }) => {
                 const res = await axios.get("http://localhost:5000/getEvents/" + (eventDate.toString()));
                 if (res.status === 200 && res.data.length > 0) {
                     setCalendar(res.data);
-                }  
+                }
             }
             catch (err) {
                 console.log(err);
@@ -46,30 +46,40 @@ const DayWiseEvents = ({ eventDate }) => {
     return (
         <>
             <div style={{ backgroundColor: '#faf7f2' }}>
-                { calendar ? 
-                <div className='placeevenly'>
-                    {
-                        calendar && calendar.map((event) => {
-                            return (
-                                < EventCard event={event} key={event._id} />
-                            )
-                        }, [])
-                    }
-                </div>
-                :
-                 <h1 style={
-                    {
-                        textAlign: 'center',
-                        color: '#585555',
-                        backgroundColor: '#f5f5f5',
-                        padding: '20px',
-                        borderRadius: '10px',
-                        marginTop: '20%',
+                {calendar ?
+                    <div className='placeevenly'>
+                        {
+                            calendar && calendar.map((event) => {
+                                return (
+                                    < EventCard event={event} key={event._id} />
+                                )
+                            }, [])
+                        }
+                    </div>
+                    :
+                    <h1 style={
+                        {
+                            textAlign: 'center',
+                            color: '#585555',
+                            backgroundColor: '#f5f5f5',
+                            padding: '20px',
+                            borderRadius: '10px',
+                            marginTop: '20%',
 
-                    }
-                 }>Hurheyyy No Events On This Day!!</h1> }
+                        }
+                    }>Hurheyyy No Events On This Day!!</h1>}
             </div>
-            <button className="addbutton" onClick={() => navigate("/insertform")}>Add Event</button>
+            <button className="addbutton" onClick={() => navigate("/insertform", {
+                state: {
+                    params: "Ritesh"
+                }
+            })}>Add Event</button>
+            {/* <Link to={{
+                pathname: "/insertform",
+                state: {
+                    params: "Ritesh"
+                }
+            }}>Add Event</Link> */}
         </>
     )
 }

@@ -7,12 +7,14 @@ const currDate = require('../middleware/chechDate');
 const NodeCache = require('node-cache');
 const myCache = new NodeCache()
 const { setendtime, setstarttime } = require('../middleware/setendtime');
+const upload = require('../middleware/photoupload.js');
 
 // router.post('/insertevent/:token', auth, async (req, res) => {
 router.post('/insertevent', async (req, res) => {
     try{
         // const user = req.user;
         // const isAuthorized = await User.isAdminUser(user.id) || await User.isClubUser(user.id);
+        // console.log(req.headers);
         const isAuthorized = true;
         if(isAuthorized){
             const calendar = new Calendar(req.body);
@@ -37,7 +39,18 @@ router.post('/insertevent', async (req, res) => {
         console.log(error);
         res.status(400).send(error);
     }
-})
+});
+
+router.post('/uploadphoto', upload.single('image'), async (req, res) => {
+    try {
+        console.log(JSON.stringify(req.file));
+        res.status(200).send(req.file);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).send(error);
+    }
+});
 
 router.post('/deleteEvent', auth, async (req, res) => {
     try{
