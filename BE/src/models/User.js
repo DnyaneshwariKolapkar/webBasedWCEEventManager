@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const validator = require('validator');
-const { log } = require('console');
 
 
 // User Information Schema
@@ -32,13 +31,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    isAdminUser:{
-        type: Boolean,
-        default: false
-    },
-    isClubUser: {
-        type: Boolean,
-        default: false
+    usertype: {
+        type: String,
+        enum : ['user', 'clubuser', 'adminuser'],
+        default: 'user'
     },
     clubNameShort: {
         type: String
@@ -178,9 +174,9 @@ userSchema.statics.applyForClubUser = async function(token) {
 
 // Promote User to Club User
 userSchema.statics.createClubUser = async function(tempclub, admintoken) {
-    const adminuser = await User.findOne({'tokens.token': admintoken, isAdminUser: true});
+    const adminuser = await User.findOne({'tokens.token': admintoken, usertype: 'adminuser'});
     if(adminuser){
-        await User.findOneAndUpdate({email: tempclub.userEmail, isVerified: true}, {isClubUser: true, clubNameShort: tempclub.clubNameShort, clubNameLong: tempclub.clubNameLong});
+        await User.findOneAndUpdate({email: tempclub.userEmail, isVerified: true}, {usertype: 'clubuser' , clubNameShort: tempclub.clubNameShort, clubNameLong: tempclub.clubNameLong});
         const user = await User.findOne({email: tempclub.userEmail, isVerified: true});
         user.save();
         if(!user){
@@ -196,7 +192,7 @@ userSchema.statics.createClubUser = async function(tempclub, admintoken) {
 
 // check if user is admin user
 userSchema.statics.isAdminUser = async function(id) {
-    const user = await User.findOne({_id: id, isAdminUser: true});
+    const user = await User.findOne({_id: id, usertype: 'adminuser'});
     if(!user){
         console.log('not admin user');
     }
@@ -208,7 +204,7 @@ userSchema.statics.isAdminUser = async function(id) {
 
 // check if user is club user
 userSchema.statics.isClubUser = async function(id) {
-    const user = await User.findOne({_id: id, isClubUser: true});
+    const user = await User.findOne({_id: id, usertype: 'clubuser'});
     if(!user){
         console.log('not club user');
     }

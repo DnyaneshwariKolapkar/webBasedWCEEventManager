@@ -14,6 +14,7 @@ function Insertform({ eventDate }) {
     const navigate = useNavigate();
     const loc = useLocation()
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const [photo, setPhoto] = useState();
 
     // const history = useHistory();
     const data = loc?.state?.params;
@@ -28,14 +29,22 @@ function Insertform({ eventDate }) {
                     starttime: startTime,
                     location: eventLocation,
                     link: eventLink,
-                    date: eventDate
+                    date: eventDate,
+                    eventimage: ""
+                }
+                if (photo) {
+                    const formData = new FormData();
+                    formData.append('image', photo);
+                    const res = await axios.post('http://localhost:5000/uploadphoto', formData, { headers: { "Authorization": `Bearer ${user.token.toString()}` } });
+                    console.log(res.data);
+                    newCalendar.eventimage = res.data;
                 }
                 const res = await axios.post('http://localhost:5000/insertevent', newCalendar, { headers: { "Authorization": `Bearer ${user.token.toString()}` } });
                 if (res.status === 200) {
                     alert('Event Added Successfully');
                     setEventName('');
                     setAbout('');
-                    setDuration('');    
+                    setDuration('');
                     setStartTime('');
                     setEventLocation('');
                     setEventLink('');
@@ -62,6 +71,7 @@ function Insertform({ eventDate }) {
                         <input className='insertformbodyinput' type="text" placeholder="Event Location" value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} />
                         <input className='insertformbodyinput' type="text" placeholder="Event Link" value={eventLink} onChange={(e) => setEventLink(e.target.value)} />
                         <input className='insertformbodyinput' type="text" placeholder="Description" value={about} onChange={(e) => setAbout(e.target.value)} />
+                        <input className='insertformbodyinput' type="file" accept='image/*' onChange={(e) => setPhoto(e.target.files[0])} />
                         <br />
                         <button type="submit" className='buttonloginpage' onClick={SubmitButton} >Submit</button>
                     </div>

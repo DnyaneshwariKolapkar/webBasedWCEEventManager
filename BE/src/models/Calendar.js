@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const multer = require('multer');
 
 const calendarSchema = new mongoose.Schema({
     eventname: {
@@ -53,9 +54,10 @@ const calendarSchema = new mongoose.Schema({
         // required : true,
         type: String,
     },
+    eventimage: {
+        type: String,
+    }
 })
-
-
 
 calendarSchema.statics.checkIsAvailable = async function(date, starttime, endtime) {
     const calendar = await Calendar.findOne({
@@ -112,6 +114,7 @@ async function insert_excel(path) {
         console.log(error);
     }
 }
+
 
 
 
