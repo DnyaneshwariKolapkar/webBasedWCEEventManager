@@ -116,20 +116,9 @@ router.get('/getEvents', async (req, res) => {
             // console.log(Date);
             // console.log('from server');
             // const events = JSON.stringify(await Calendar.find( {date: {$gte: Date }}).sort({date: 1}));
-            const events = JSON.stringify(await Calendar.find().sort({ date: 1 }));
+            const events = await Calendar.find().sort({ date: 1 });
             // myCache.set('events', events, 3600);
-            // const data = myCache.get('events');
-            const map = new Map();
-            const data = JSON.parse(events);
-            // data.forEach(element => {
-            //     if (element.eventimage != "") {
-            //         map.set(element._id, element.eventimage);
-            //     }
-            //     else {
-            //         map.set(element.date, [element]);
-            //     }
-            // });
-            const image = 
+            // const data = myCache.get('events');    
             res.status(200).send(events);
         }
     }

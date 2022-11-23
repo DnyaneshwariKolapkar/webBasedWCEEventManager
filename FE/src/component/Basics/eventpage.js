@@ -13,7 +13,7 @@ const Eventpage = () => {
         return (
             <>
                 <div className="card" >
-                    <img src={Images.tempImage} alt="Avatar" style={{ width: "100%", borderRadius: "10px" }} />
+                    <img src={"http://localhost:5000/uploads/" + event.eventimage} alt="Avatar" style={{ width: "100%", borderRadius: "10px" }} />
                     <div className="container1">
                         <h3><b>{event.eventname}</b></h3>
                         <p>On <b>{date}</b> at <b>{event.starttime}</b> for <b>{event.duration} Hr</b></p>
@@ -28,8 +28,9 @@ const Eventpage = () => {
         const getEvents = async () => {
             try {
                 const res = await axios.get("http://localhost:5000/getEvents");
-                setCalendar(res.data);
-                console.log(res.data);
+                if (res.status === 200 && res.data.length > 0) {
+                    setCalendar(res.data);
+                }
             }
             catch (err) {
                 console.log(err);
@@ -42,16 +43,29 @@ const Eventpage = () => {
 
     return (
         <>
-            <div style={{ backgroundColor: '#faf7f2' }}>
-                <div className='placeevenly'>
-                    {
-                        calendar && calendar.map((event) => {
-                            return (
-                                < EventCard event={event} key={event._id} />
-                            )
-                        }, [])
-                    }
-                </div>
+            <div>
+                {calendar ?
+                    <div className='placeevenly'>
+                        {
+                            calendar && calendar.map((event) => {
+                                return (
+                                    < EventCard event={event} key={event._id} />
+                                )
+                            }, [])
+                        }
+                    </div>
+                    :
+                    <h1 style={
+                        {
+                            textAlign: 'center',
+                            color: '#585555',
+                            backgroundColor: '#f5f5f5',
+                            padding: '20px',
+                            borderRadius: '10px',
+                            marginTop: '20%',
+
+                        }
+                    }>No Events!!</h1>}
             </div>
         </>
     )
