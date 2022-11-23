@@ -6,14 +6,12 @@ import Verificartionpage from "./component/Basics/verificartionpage";
 import Calendar from "./component/Basics/calendar.js";
 import Eventpage from "./component/Basics/eventpage";
 import { useState } from "react";
-import DayWiseEvents from "./component/Basics/daywiseevents";
 import Insertform from "./component/Basics/insertform";
 import Profile from "./component/Basics/Profile";
 import ClubUser from "./component/Basics/ClubUser";
 
 
 const Router = () => {
-  const [date, setDate] = useState(new Date(new Date().setHours(0,0,0,0)));
 
   return (
     <>
@@ -23,11 +21,10 @@ const Router = () => {
         <Route path="" element={<Eventpage />} />
         <Route path="Profile" element={<Profile />} />
         <Route path="verificartionpage" element={<Verificartionpage />} />
-        <Route path="calendar" element={<Calendar params={setDate} />} />
+        <Route path="calendar" element={<Calendar />} />
       </Route>
       <Route path="/clubUser" element={<ClubUser />} />
-      <Route path="/daywiseevents" element={<DayWiseEvents eventDate={date} />} />
-      <Route path="/insertform" element={<Insertform eventDate={date} />} />
+      <Route path="/insertform" element={<Insertform />} />
     </Routes>
     </>
   )

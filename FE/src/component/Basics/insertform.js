@@ -4,7 +4,9 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 
-function Insertform({ eventDate }) {
+function Insertform() {
+    const loc = useLocation()
+    const data = loc?.state?.params;
     const [eventName, setEventName] = useState('');
     const [about, setAbout] = useState('');
     const [duration, setDuration] = useState('');
@@ -12,12 +14,11 @@ function Insertform({ eventDate }) {
     const [eventLocation, setEventLocation] = useState('');
     const [eventLink, setEventLink] = useState('');
     const navigate = useNavigate();
-    const loc = useLocation()
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const [photo, setPhoto] = useState();
 
     // const history = useHistory();
-    const data = loc?.state?.params;
+    
 
     const SubmitButton = async () => {
         try {
@@ -29,7 +30,7 @@ function Insertform({ eventDate }) {
                     starttime: startTime,
                     location: eventLocation,
                     link: eventLink,
-                    date: eventDate,
+                    date: data,
                     eventimage: ""
                 }
                 if (photo) {
@@ -63,7 +64,7 @@ function Insertform({ eventDate }) {
             <div className='insertformbody'>
                 <div>
                     <div className='form'>
-                        <h1>Book Slot on {eventDate.getDate().toString() + " " + month[eventDate.getMonth()] + " " + eventDate.getFullYear().toString()} </h1>
+                        <h1>Book Slot on {data.getDate().toString() + " " + month[data.getMonth()] + " " + data.getFullYear().toString()} </h1>
                         <br /><br />
                         <input className='insertformbodyinput' type="text" placeholder="Event Name" value={eventName} onChange={(e) => setEventName(e.target.value)} />
                         <input className='insertformbodyinput' type="text" placeholder="Duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
@@ -76,7 +77,6 @@ function Insertform({ eventDate }) {
                         <button type="submit" className='buttonloginpage' onClick={SubmitButton} >Submit</button>
                     </div>
                 </div>
-                <div> {data} + tada </div>
             </div>
         </>
     )
