@@ -10,14 +10,13 @@ const Calender = () => {
     const [date, setDate] = useState(new Date(new Date().setHours(0, 0, 0, 0)));
     const onChange = date => {
         setCalendar([]);
-        const selecteddate = date;
-        getEvents(selecteddate);
+        getEvents(date);
         setDate(date);
     }
 
-    const getEvents = async (selecteddate) => {
+    const getEvents = async (date) => {
         try {
-            const res = await axios.get("http://localhost:5000/getEvents/" + (selecteddate.toString()));
+            const res = await axios.get("http://localhost:5000/getEvents/" + (date.toString()));
             if (res.status === 200 && res.data.length > 0) {
                 console.log(res.data);
                 setCalendar(res.data);
