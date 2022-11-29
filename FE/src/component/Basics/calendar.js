@@ -102,11 +102,16 @@ const Calender = () => {
             </div>
             {(date < new Date().setHours(0, 0, 0, 0) || user.usertype == 'user') ?
                 null
-                : <button className="addbutton" onClick={() => Navigate("/insertform", {
+                : <button className="addEventbutton" onClick={() => Navigate("/insertform", {
                     state: {
                         params: date
                     }
                 })}>Add Event</button>}
+            {(user.usertype == 'adminuser') ?
+                <button className="addEventsbutton" onClick={() => Navigate("/insertEvents", {
+                })}>Add Events</button>
+                : null}
+
         </>
     )
 }

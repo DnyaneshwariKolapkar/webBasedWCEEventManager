@@ -134,7 +134,7 @@
   }
   
 
-.addbutton  {
+.addEventbutton  {
   background-color: #250544;
   color: white;
   padding: 16px 20px;
@@ -147,6 +147,22 @@
   width: 280px;
   border-radius: 50px;
 }
+
+.addEventsbutton {
+  background-color: #250544;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 350px;
+  width: 280px;
+  border-radius: 50px;
+  
+}
+
 
 .addbutton:hover {
   background-color: #663399;

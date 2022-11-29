@@ -10,6 +10,7 @@ import Profile from "./component/Basics/Profile";
 import ClubUser from "./component/Basics/ClubUser";
 import MyEvents from "./component/Basics/myevents";
 import EditFrom from "./component/Basics/editfrom";
+import InsertEvents from "./component/Basics/InsertEvents";
 
 
 const Router = () => {
@@ -28,6 +29,7 @@ const Router = () => {
       <Route path="/verificartionpage" element={<Verificartionpage />} />
       <Route path="/myevents" element={<MyEvents />} />
       <Route path="/editform" element={<EditFrom />} />
+      <Route path="/insertEvents" element={<InsertEvents />} />
     </Routes>
     </>
   )

@@ -75,7 +75,11 @@ function EditFrom() {
                         <textarea className='insertformbodytextarea' placeholder="Description" value={about} rows="15" cols="65" onChange={(e) => setAbout(e.target.value)} />
                         <input className='insertformbodyinput' type="file" accept='image/*' onChange={(e) => setPhoto(e.target.files[0])} />
                         <br />
-                        <button type="submit" className='buttonloginpage' onClick={SubmitButton} >Submit</button>
+                        <div style={{display: "flex"}}>
+                        <button type="submit" className='buttonloginpage'style={{marginRight:"20px" }}  >Delete</button>
+                        <br />
+                        <button type="submit" className='buttonloginpage' onClick={SubmitButton}>Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
