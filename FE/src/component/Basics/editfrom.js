@@ -3,19 +3,19 @@ import './insertform.css';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-
-function Insertform() {
+function EditFrom() {
     const loc = useLocation()
     const data = loc?.state?.params;
-    const [eventName, setEventName] = useState('');
-    const [about, setAbout] = useState('');
-    const [duration, setDuration] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [eventLocation, setEventLocation] = useState('');
-    const [eventLink, setEventLink] = useState('');
+    const [eventName, setEventName] = useState(data.eventname);
+    const [about, setAbout] = useState(data.description);
+    const [duration, setDuration] = useState(data.duration);
+    const [startTime, setStartTime] = useState(data.starttime);
+    const [eventLocation, setEventLocation] = useState(data.location);
+    const [eventLink, setEventLink] = useState(data.link);
     const navigate = useNavigate();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const [photo, setPhoto] = useState();
+    const date = new Date(data.date);
 
     // const history = useHistory();
     
@@ -49,7 +49,7 @@ function Insertform() {
                     setStartTime('');
                     setEventLocation('');
                     setEventLink('');
-                    navigate('/mainpage/calendar');
+                    navigate('/mainpage');
                 }
             }
         }
@@ -64,7 +64,8 @@ function Insertform() {
             <div className='insertformbody'>
                 <div>
                     <div className='form'>
-                        <h1>Book Slot on {data.getDate().toString() + " " + month[data.getMonth()] + " " + data.getFullYear().toString()} </h1>
+                        {console.log(date)}
+                        <h1>Book Slot on {date.getDate().toString() + " " + month[date.getMonth()] + " " + date.getFullYear().toString()} </h1>
                         <br />
                         <input className='insertformbodyinput' type="text" placeholder="Event Name"  value={eventName} onChange={(e) => setEventName(e.target.value)} />
                         <input className='insertformbodyinput' type="time" placeholder="Duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
@@ -82,4 +83,4 @@ function Insertform() {
     )
 }
 
-export default Insertform
+export default EditFrom

@@ -2,7 +2,7 @@
 	/* display: grid;
 	justify-content: center;
 	align-items: center; */
-	height: 400px;
+	height: 500px;
 	margin: 40px 50px 50px;
   display: grid;
   justify-content: center;
@@ -11,11 +11,11 @@
 }
 
 .react-calendar {
-    width: 600px;
+    width: 700px;
     max-width: 100%;
     background: white;
     /* border: 1px solid #a0a096; */
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif; 
     line-height: 1.125em;
     border-radius: 20px;
     box-shadow: 0px 0px 20px 0 rgba(0,0,0,0.2);
@@ -94,7 +94,7 @@
   }
   .react-calendar__tile {
     max-width: 100%;
-    padding: 10px 6.6667px;
+    padding: 20px 6.6667px;
     background: none;
     text-align: center;
     line-height: 40px;

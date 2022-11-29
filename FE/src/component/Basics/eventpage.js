@@ -1,10 +1,12 @@
 import { React, useEffect, useState } from 'react'
 import axios from 'axios';
 import './mainpage.css';
-import { Images } from '../../constants/images';
+import { useNavigate } from 'react-router-dom';
 
 
 const Eventpage = () => {
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const Navigate = useNavigate();
 
     const EventCard = ({ event }) => {
         const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -12,16 +14,29 @@ const Eventpage = () => {
         const date = eventDate.getDate().toString() + " " + month[eventDate.getMonth()] + " " + eventDate.getFullYear().toString();
         return (
             <>
-                <div className="card" >
-                    <img src={"http://localhost:5000/uploads/" + event.eventimage} alt="Avatar" style={{ width: "100%", borderRadius: "10px" }} />
+                <div className="card" style={{ justifyContent: 'middle', width: '100%' }} >
+                    <img src={"http://localhost:5000/uploads/" + event.eventimage} alt="Avatar" className='card-image' />
                     <div className="container1">
-                        <h3><b>{event.eventname}</b></h3>
-                        <p>On <b>{date}</b> at <b>{event.starttime}</b> for <b>{event.duration} Hr</b></p>
+                        <p className='card-name'>{event.eventname}</p>
+                        <p> <b>About -</b> {event.description} </p>
+                        <p><b>Date - </b> {date} <br /><b>Time - </b>{event.starttime} for {event.duration} Hr</p>
                         <p><i>Organised By <b>{event.createdBy}</b></i> </p>
                     </div>
+                    {checkuser(event, eventDate)}
                 </div>
             </>
         )
+    }
+    const checkuser = (event, eventDate) => {
+        if (user.usertype === "adminuser" || (event.createdBy === user.name && eventDate >= new Date(new Date().setHours(0, 0, 0, 0)))) {
+            return (
+                <i className="fa fa-edit" style={{ fontSize: '34px', position: 'relative', top: '8px', right: '8px' }} onClick={() => Navigate("/editform", {
+                    state: {
+                        params: event
+                    }
+                })} />
+            )
+        }
     }
 
     useEffect(() => {
@@ -43,11 +58,11 @@ const Eventpage = () => {
 
     return (
         <>
-            <div>
+            <div className='card-body'>
                 {calendar ?
                     <div className='placeevenly'>
                         {
-                            calendar && calendar.map((event) => {
+                            calendar.map((event) => {
                                 return (
                                     < EventCard event={event} key={event._id} />
                                 )

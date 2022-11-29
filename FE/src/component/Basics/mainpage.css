@@ -1,23 +1,37 @@
-
-.placeevenly {
-  display: grid;
+/* .card-body {
+  width: 100%;
+  height: 100%;
   justify-content: center;
-  grid-template-columns: auto auto auto auto;
-  padding: 10px;
-}
+  display: flex;
+} */
+
+
 
 .card {
     /* Add shadows to create the "card" effect */
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
     transition: 0.15s;
-    width: 250px;
-    height: 400px;
-    display: inline-block;
+    /* max-height: 400px; */
+    display: flex;
     margin: 20px;
     /* background-color: #1d094b; */
     background-color: antiquewhite;
     border-radius: 10px;
     padding: 10px;
+    width: 100%;
+  }
+
+  .card-image {
+    max-width: 100%;
+    height: 200px;
+    border-radius: 10px;
+  }
+
+  .card-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1d094b;
+    margin: 10px 0;
   }
   
   /* On mouse-over, add a deeper shadow */
@@ -28,6 +42,9 @@
   /* Add some padding inside the card container */
   .container1 {
     padding: 2px 16px;
+    justify-content: left;
+    width: 550px;
+    display: flex;
   }
 
   .navbar {

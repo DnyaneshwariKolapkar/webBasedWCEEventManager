@@ -4,11 +4,19 @@
 	align-items: center;
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
-	height: 100vh;
     background: white;
+	padding: 20px;
 }
 
 .insertformbodyinput {
     padding: 4%;
     margin: 3%;
+}
+
+.insertformbodytextarea {
+    height: 250px;
+    width: 544px;
+    font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 82%;
+    overflow:scroll;
 }

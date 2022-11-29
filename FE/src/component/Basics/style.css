@@ -66,20 +66,6 @@ a {
 	transition: transform 80ms ease-in;
 }
 
-.buttonprofile{
-	border-radius: 20px;
-	border: 1px solid #1d094b;
-	background-color: #1d094b;
-	color: #FFFFFF;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 12px 45px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	transition: transform 80ms ease-in;
-}
-
-
 
 .buttonloginpage:active {
 	transform: scale(0.95);
@@ -106,6 +92,14 @@ a {
 }
 
 input {
+	background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+}
+
+textarea {
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
@@ -276,10 +270,10 @@ footer a {
 }
 
 .profileinfobox {
-	background-color: blue;
+	background-color: #1d094b;
 	color: #fff;
-	padding: 8px;
-	border-radius: 15px;
-	width: 200px;
+	padding: 15px;
+	border-radius: 10px;
+	width: 300px;
 	text-align: start;
 }

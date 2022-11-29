@@ -5,10 +5,11 @@ import Mainpage from "./component/Basics/Mainpage";
 import Verificartionpage from "./component/Basics/verificartionpage";
 import Calendar from "./component/Basics/calendar.js";
 import Eventpage from "./component/Basics/eventpage";
-import { useState } from "react";
 import Insertform from "./component/Basics/insertform";
 import Profile from "./component/Basics/Profile";
 import ClubUser from "./component/Basics/ClubUser";
+import MyEvents from "./component/Basics/myevents";
+import EditFrom from "./component/Basics/editfrom";
 
 
 const Router = () => {
@@ -20,11 +21,13 @@ const Router = () => {
       <Route path="/mainpage" element={<Mainpage />} >
         <Route path="" element={<Eventpage />} />
         <Route path="Profile" element={<Profile />} />
-        <Route path="verificartionpage" element={<Verificartionpage />} />
         <Route path="calendar" element={<Calendar />} />
       </Route>
       <Route path="/clubUser" element={<ClubUser />} />
       <Route path="/insertform" element={<Insertform />} />
+      <Route path="/verificartionpage" element={<Verificartionpage />} />
+      <Route path="/myevents" element={<MyEvents />} />
+      <Route path="/editform" element={<EditFrom />} />
     </Routes>
     </>
   )

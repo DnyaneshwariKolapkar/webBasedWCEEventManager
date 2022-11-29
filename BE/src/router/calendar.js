@@ -57,8 +57,8 @@ router.post('/uploadphoto', auth, upload.single('image'), async (req, res) => {
 router.post('/deleteEvent', auth, async (req, res) => {
     try {
         const user = req.user;
-        const isAdmin = await User.isAdminUser(user.id);
-        if (isAdmin) {
+        const isPermited = await User.isAdminUser(user.id) || await User.isClubUser(user.id);
+        if (isPermited) {
             const calendar = await Calendar.deleteEvent(req.body.name, req.body.date, req.body.starttime, req.body.endtime);
             if (calendar) {
                 res.status(200).send(calendar);
@@ -68,7 +68,7 @@ router.post('/deleteEvent', auth, async (req, res) => {
             }
         }
         else {
-            res.status(400).send({ error: 'Not admin user' });
+            res.status(400).send({ error: 'Not authorised user' });
         }
     }
     catch (error) {
