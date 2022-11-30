@@ -57,25 +57,66 @@ router.post('/uploadphoto', auth, upload.single('image'), async (req, res) => {
 router.post('/deleteEvent', auth, async (req, res) => {
     try {
         const user = req.user;
-        const isPermited = await User.isAdminUser(user.id) || await User.isClubUser(user.id);
-        if (isPermited) {
-            const calendar = await Calendar.deleteEvent(req.body.name, req.body.date, req.body.starttime, req.body.endtime);
-            if (calendar) {
-                res.status(200).send(calendar);
+        const event = await Calendar.findeventbyid(req.body.id);
+        if (event) {
+            const isAuthorized = await User.isAdminUser(user.id) || (await User.isClubUser(user.id) && (user.name === event.createdBy));
+            if (isAuthorized) {
+                const deleteEvent = await Calendar.deleteEvent(req.body.id);
+                if (deleteEvent) {
+                    myCache.del('events');
+                    res.status(200).send({ message: 'Event deleted successfully' });
+                }
+                else {
+                    res.status(400).send({ error: 'Event not deleted' });
+                }
             }
             else {
-                res.status(400).send({ error: 'Event not found' });
+                res.status(400).send({ error: 'Not authorized to access this resource' });
             }
         }
         else {
-            res.status(400).send({ error: 'Not authorised user' });
+            res.status(400).send({ error: 'Event not found' });
         }
     }
     catch (error) {
         console.log(error);
-        res.status(400).send(error);
+        res.status(400).send
     }
-})
+});
+
+
+
+router.post('/editEvent', auth, async (req, res) => {
+    try {
+        const user = req.user;
+        const event = await Calendar.findeventbyid(req.body.id);
+        if (event) {
+            const isAuthorized = await User.isAdminUser(user.id) || (await User.isClubUser(user.id) && (user.name === event.createdBy));
+            if (isAuthorized) {
+                const editEvent = await Calendar.editEvent(req.body);
+                if (editEvent) {
+                    myCache.del('events');
+                    res.status(200).send({ message: 'Event edited successfully' });
+                }
+                else {
+                    res.status(400).send({ error: 'Event not edited' });
+                }
+            }
+            else {
+                res.status(400).send({ error: 'Not authorized to access this resource' });
+            }
+        }
+        else {
+            res.status(400).send({ error: 'Event not found' });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).send
+    }
+});
+
+
 
 router.post('/requestToDelete', auth, async (req, res) => {
     try {
@@ -149,6 +190,8 @@ router.get('/getEvents/:date', async (req, res) => {
         res.status(400).send(error);
     }
 });
+
+
 
 
 

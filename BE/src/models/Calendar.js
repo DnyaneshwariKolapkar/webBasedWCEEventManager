@@ -82,23 +82,57 @@ calendarSchema.statics.checkIsAvailable = async function(date, starttime, endtim
     return false;
 }
 
-calendarSchema.statics.deleteEvent = function(name, date, starttime, endtime) {
-    const calendar = this.findOneAndDelete({name: name, date: date, starttime: starttime, endtime: endtime});
+calendarSchema.statics.deleteEvent = async function(id) {
+    const calendar = await this.findOneAndDelete({_id: id});
     if(calendar) {
         return true;
     }
     return false;
 }
 
-calendarSchema.statics.requestToDelete = function(name, date, starttime, endtime) {
-    const calendar = this.findOneAndUpdate({name: name, date: date, starttime: starttime, endtime: endtime}, {toDelete: true});
+calendarSchema.statics.editEvent = async function (data) {
+    const calendar = await this.findOneAndUpdate({_id: data.id},
+        {
+            $set: {
+                eventname: data.eventname,
+                date: data.date,
+                starttime: data.starttime,
+                endtime: data.endtime,
+                description: data.description,
+                areaofinterest: data.areaofinterest,
+                branches: data.branches,
+                mode: data.mode,
+                location: data.location,
+                link: data.link,
+                duration: data.duration,
+                eventimage: data.eventimage,
+            }
+        },
+        {new: true}
+    );
+    if(calendar) {
+        return true;
+    }
+    return false;
+}
+
+calendarSchema.statics.findeventbyid = async function (id) {
+    const calendar = await this.findOne({_id: id});
     if(calendar) {
         return calendar;
     }
-    else {
-        console.log('Event not found');
-    }
+    return false;
 }
+
+// calendarSchema.statics.requestToDelete = function(name, date, starttime, endtime) {
+//     const calendar = this.findOneAndUpdate({name: name, date: date, starttime: starttime, endtime: endtime}, {toDelete: true});
+//     if(calendar) {
+//         return calendar;
+//     }
+//     else {
+//         console.log('Event not found');
+//     }
+// }
 
 async function insert_excel(path) {
     try {
