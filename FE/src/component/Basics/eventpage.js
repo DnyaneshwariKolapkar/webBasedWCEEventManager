@@ -6,6 +6,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Eventpage = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    if (user == null) {
+        const guestuser = {
+          name: "Guest",
+          email: "",
+          usertype: "guest"
+        }
+        setUser(guestuser);
+      }
     const Navigate = useNavigate();
 
     const EventCard = ({ event }) => {
@@ -15,7 +23,7 @@ const Eventpage = () => {
         return (
             <>
                 <div className="card" style={{ justifyContent: 'middle', width: '100%' }} >
-                    <img src={"http://localhost:5000/uploads/" + event.eventimage} alt="Avatar" className='card-image' />
+                    <img src={"http://localhost:5000/uploads/eventImages/" + event.eventimage} alt="Avatar" className='card-image' />
                     <div className="container1">
                         <p className='card-name'>{event.eventname}</p>
                         <p> <b>About -</b> {event.description} </p>
@@ -28,7 +36,7 @@ const Eventpage = () => {
         )
     }
     const checkuser = (event, eventDate) => {
-        if (user.usertype === "adminuser" || (event.createdBy === user.name && eventDate >= new Date(new Date().setHours(0, 0, 0, 0)))) {
+        if (user?.usertype === "adminuser" || (event.createdBy === user?.name && eventDate >= new Date(new Date().setHours(0, 0, 0, 0)))) {
             return (
                 <i className="fa fa-edit" style={{ fontSize: '34px', position: 'relative', top: '8px', right: '8px' }} onClick={() => Navigate("/editform", {
                     state: {

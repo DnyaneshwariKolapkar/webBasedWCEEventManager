@@ -8,6 +8,14 @@ import axios from 'axios';
 const Calender = () => {
     const Navigate = useNavigate();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+    if (user == null) {
+        const guestuser = {
+            name: "Guest",
+            email: "",
+            usertype: "guest"
+        }
+        setUser(guestuser);
+    }
 
     const [date, setDate] = useState(new Date(new Date().setHours(0, 0, 0, 0)));
     const onChange = date => {
@@ -18,7 +26,7 @@ const Calender = () => {
 
     const getEvents = async (date) => {
         try {
-            const res = await axios.get("http://localhost:5000/getEvents/" + (date.toString()));
+            const res = await axios.get("http://localhost:5000/getEvents/eventImages/" + (date.toString()));
             if (res.status === 200 && res.data.length > 0) {
                 console.log(res.data);
                 setCalendar(res.data);
@@ -55,7 +63,7 @@ const Calender = () => {
     }
 
     const checkuser = (event, eventDate) => {
-        if (user.usertype === "adminuser" || (event.createdBy === user.name && eventDate >= new Date(new Date().setHours(0, 0, 0, 0)))) {
+        if (user?.usertype === "adminuser" || (event.createdBy === user.name && eventDate >= new Date(new Date().setHours(0, 0, 0, 0)))) {
             return (
                 <i className="fa fa-edit" style={{ fontSize: '34px', position: 'relative', top: '8px', right: '8px' }} onClick={() => Navigate("/editform", {
                     state: {
@@ -100,14 +108,15 @@ const Calender = () => {
                 </div>
 
             </div>
-            {(date < new Date().setHours(0, 0, 0, 0) || user.usertype == 'user') ?
-                null
-                : <button className="addEventbutton" onClick={() => Navigate("/insertform", {
+            {(date < new Date().setHours(0, 0, 0, 0) || user?.usertype == 'clubuser' || user?.usertype == 'adminuser') ?
+                <button className="addEventbutton" onClick={() => Navigate("/insertform", {
                     state: {
                         params: date
                     }
-                })}>Add Event</button>}
-            {(user.usertype == 'adminuser') ?
+                })}>Add Event</button>
+                :
+                null}
+            {(user?.usertype == 'adminuser') ?
                 <button className="addEventsbutton" onClick={() => Navigate("/insertEvents", {
                 })}>Add Events</button>
                 : null}

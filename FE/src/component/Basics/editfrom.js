@@ -16,40 +16,47 @@ function EditFrom() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const [photo, setPhoto] = useState();
     const date = new Date(data.date);
+    const [newDate, setNewDate] = useState(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
 
     // const history = useHistory();
-    
 
-    const SubmitButton = async () => {
+    const DeleteEvent = async () => {
+        try {
+            const res = await axios.post('http://localhost:5000/deleteEvent', { id: data._id }, { headers: { "Authorization": `Bearer ${user.token.toString()}` } });
+            if (res.status === 200) {
+                alert('Event Deleted Successfully');
+                navigate('/mainpage');
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+    const EditEvent = async () => {
         try {
             if (eventName && about && duration && startTime && eventLocation && eventLink) {
                 const newCalendar = {
+                    id: data._id,
                     eventname: eventName,
                     description: about,
                     duration: duration,
                     starttime: startTime,
                     location: eventLocation,
                     link: eventLink,
-                    date: data,
+                    date: new Date(new Date(newDate).setHours(0, 0, 0, 0)),
                     eventimage: ""
                 }
-                if (photo) {
+                if (photo) {    
                     const formData = new FormData();
                     formData.append('image', photo);
                     const res = await axios.post('http://localhost:5000/uploadphoto', formData, { headers: { "Authorization": `Bearer ${user.token.toString()}` } });
                     console.log(res.data);
                     newCalendar.eventimage = res.data;
                 }
-                const res = await axios.post('http://localhost:5000/insertevent', newCalendar, { headers: { "Authorization": `Bearer ${user.token.toString()}` } });
+                const res = await axios.post('http://localhost:5000/editEvent',  newCalendar, { headers: { "Authorization": `Bearer ${user.token.toString()}` } });
                 if (res.status === 200) {
-                    alert('Event Added Successfully');
-                    setEventName('');
-                    setAbout('');
-                    setDuration('');
-                    setStartTime('');
-                    setEventLocation('');
-                    setEventLink('');
-                    navigate('/mainpage');
+                    alert('Event Updated Successfully');
+                    // navigate('/mainpage');
                 }
             }
         }
@@ -58,6 +65,11 @@ function EditFrom() {
         }
     }
 
+    const ChangeDate = (e) => {
+        setNewDate(e.target.value);
+    }
+
+
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return (
         <>
@@ -65,9 +77,11 @@ function EditFrom() {
                 <div>
                     <div className='form'>
                         {console.log(date)}
-                        <h1>Book Slot on {date.getDate().toString() + " " + month[date.getMonth()] + " " + date.getFullYear().toString()} </h1>
+                        <h1>Edit Slot on {date.getDate().toString() + " " + month[date.getMonth()] + " " + date.getFullYear().toString()} </h1>
                         <br />
-                        <input className='insertformbodyinput' type="text" placeholder="Event Name"  value={eventName} onChange={(e) => setEventName(e.target.value)} />
+                        <input className='insertformbodyinput' type="text" placeholder="Event Name" value={eventName} onChange={(e) => setEventName(e.target.value)} />
+                        <input type="date" value={newDate} onChange={(e) => ChangeDate(e)} />
+                        <p>{(new Date(new Date(newDate).setHours(0, 0, 0, 0))).toString()}</p>
                         <input className='insertformbodyinput' type="time" placeholder="Duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
                         <input className='insertformbodyinput' type="time" placeholder="Start Time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
                         <input className='insertformbodyinput' type="text" placeholder="Event Location" value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} />
@@ -75,10 +89,10 @@ function EditFrom() {
                         <textarea className='insertformbodytextarea' placeholder="Description" value={about} rows="15" cols="65" onChange={(e) => setAbout(e.target.value)} />
                         <input className='insertformbodyinput' type="file" accept='image/*' onChange={(e) => setPhoto(e.target.files[0])} />
                         <br />
-                        <div style={{display: "flex"}}>
-                        <button type="submit" className='buttonloginpage'style={{marginRight:"20px" }}  >Delete</button>
-                        <br />
-                        <button type="submit" className='buttonloginpage' onClick={SubmitButton}>Submit</button>
+                        <div style={{ display: "flex" }}>
+                            <button type="submit" className='buttonloginpage' style={{ marginRight: "20px" }} onClick={DeleteEvent} >Delete</button>
+                            <br />
+                            <button type="submit" className='buttonloginpage' onClick={EditEvent}>Edit</button>
                         </div>
                     </div>
                 </div>

@@ -86,6 +86,7 @@ const Loginpage = () => {
                             <input type="password" placeholder="Password" value={loginPasswd} onChange={(e) => setLoginPasswd(e.target.value)} />
                             <a href="https://www.google.com">Forgot your password?</a>
                             <button onClick={LoginButton} className="buttonloginpage" >Sign In</button>
+                            
                         </div>
                     </div>
                     <div className="form-container sign-up-container">
@@ -93,7 +94,7 @@ const Loginpage = () => {
                             <h1>Create Account</h1>
                             <input type="text" placeholder="Name" value={inputName} onChange={(e) => setInputName(e.target.value)} />
                             <input type="email" placeholder="Email" value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} />
-                            <input type="password" placeholder="Password" value={inputPasswd} onChange={(e) => setInputPasswd(e.target.value)} />
+                            <input type="password" placeholder="Password" value={inputPasswd} onChange={(e) => setInputPasswd(e.target.value)} /> <br />
                             <button onClick={SubmitButton} className="buttonloginpage" >Sign Up</button>
                         </div>
                     </div>
@@ -107,7 +108,8 @@ const Loginpage = () => {
                             <div className="overlay-panel overlay-right">
                                 <h1>Hello, Friend!</h1>
                                 <p className="ploginpage" >Enter your personal details and start journey with us</p>
-                                <button className="ghost buttonloginpage" id="signUp" >Sign Up</button>
+                                <button className="ghost buttonloginpage" id="signUp" >Sign Up</button> <br />
+                                <button className="ghost buttonloginpage" onClick={() => navigate('/mainpage')}>Guest</button>
                             </div>
                         </div>
                     </div>

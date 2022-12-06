@@ -36,10 +36,7 @@ const userSchema = new mongoose.Schema({
         enum : ['user', 'clubuser', 'adminuser'],
         default: 'user'
     },
-    clubNameShort: {
-        type: String
-    },
-    clubNameLong: {
+    clubName: {
         type: String
     },
     token: {
@@ -69,18 +66,14 @@ const tempClubSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    clubNameShort: {
+    clubName: {
         type: String,
         required: true
     },
-    clubNameLong: {
+    clubFile : {
         type: String,
         required: true
     },
-    message:{
-        type: String,
-        required: true
-    }
 })
 
 
@@ -155,18 +148,6 @@ userSchema.statics.VerifyUser = async function (id) {
     }
     else{
         console.log('User Verified');
-        return user;
-    }
-}
-
-
-// for applying for club user it checks is user verified via token
-userSchema.statics.applyForClubUser = async function(token) {
-    const user = await User.findOne({'tokens.token': token, isVerified: true})
-    if(!user){
-        console.log('User Not Found');
-    }
-    else{
         return user;
     }
 }

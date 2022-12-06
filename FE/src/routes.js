@@ -11,6 +11,7 @@ import ClubUser from "./component/Basics/ClubUser";
 import MyEvents from "./component/Basics/myevents";
 import EditFrom from "./component/Basics/editfrom";
 import InsertEvents from "./component/Basics/InsertEvents";
+import ClubRequests from "./component/Basics/clubrequests";
 
 
 const Router = () => {
@@ -30,6 +31,7 @@ const Router = () => {
       <Route path="/myevents" element={<MyEvents />} />
       <Route path="/editform" element={<EditFrom />} />
       <Route path="/insertEvents" element={<InsertEvents />} />
+      <Route path="/clubrequests" element={<ClubRequests />} />
     </Routes>
     </>
   )

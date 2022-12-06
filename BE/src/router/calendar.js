@@ -30,7 +30,7 @@ router.post('/insertevent', auth, async (req, res) => {
                 res.status(200).send(calendar);
             }
             else {
-                res.status(400).send({ error: 'Event is not available' });
+                res.status(401).send({ error: 'Event already exists' });
             }
         }
         else {
@@ -89,6 +89,7 @@ router.post('/deleteEvent', auth, async (req, res) => {
 router.post('/editEvent', auth, async (req, res) => {
     try {
         const user = req.user;
+        console.log(req.body);
         const event = await Calendar.findeventbyid(req.body.id);
         if (event) {
             const isAuthorized = await User.isAdminUser(user.id) || (await User.isClubUser(user.id) && (user.name === event.createdBy));

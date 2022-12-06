@@ -34,15 +34,20 @@ function Insertform() {
                     date: data,
                     eventimage: ""
                 }
+                
+
                 if (photo) {
                     const formData = new FormData();
                     formData.append('image', photo);
                     const res = await axios.post('http://localhost:5000/uploadphoto', formData, { headers: { "Authorization": `Bearer ${user.token.toString()}` } });
-                    console.log(res.data);
+                    // console.log(res.data);
                     newCalendar.eventimage = res.data;
                 }
+                
+
                 const res = await axios.post('http://localhost:5000/insertevent', newCalendar, { headers: { "Authorization": `Bearer ${user.token.toString()}` } });
-                if (res.status === 200) {
+                console.log(res);
+                if (res.status == 200) {
                     alert('Event Added Successfully');
                     setEventName('');
                     setAbout('');
@@ -55,7 +60,7 @@ function Insertform() {
             }
         }
         catch (err) {
-            console.log(err);
+            alert(err.response.data.error);
         }
     }
 
@@ -68,6 +73,7 @@ function Insertform() {
                         <h1>Book Slot on {data.getDate().toString() + " " + month[data.getMonth()] + " " + data.getFullYear().toString()} </h1>
                         <br />
                         <input className='insertformbodyinput' type="text" placeholder="Event Name" value={eventName} onChange={(e) => setEventName(e.target.value)} />
+                        <p>{data.toString()}</p>
                         <input className='insertformbodyinput' type="time" placeholder="Duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
                         <input className='insertformbodyinput' type="time" placeholder="Start Time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
                         <input className='insertformbodyinput' type="text" placeholder="Event Location" value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} />

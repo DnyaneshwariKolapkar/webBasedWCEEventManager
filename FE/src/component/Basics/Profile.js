@@ -6,6 +6,15 @@ import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  // console.log(user);
+  if (user == null) {
+    const guestuser = {
+      name: "Guest",
+      email: "",
+      usertype: "guest"
+    }
+    setUser(guestuser);
+  }
   const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
@@ -19,9 +28,12 @@ const Profile = () => {
         <div className="container" id="container">
           <div className="form">
             <img src={Images.tempImage} alt="Loading..." style={{ width: "200px", height: "200px", borderRadius: "50%" }} />
-            <p className='profileinfobox'>{user.name} <br /> {user.email} <br /> Club Description</p>
-            {user.usertype == 'user' ?
+            <p className='profileinfobox'>{user?.name} <br /> {user?.email} <br /> Club Description</p>
+            {user?.usertype == 'user' ?
               <button className="buttonloginpage" onClick={() => navigate("/clubuser")}>Apply for club user</button>
+              : null}
+            {user?.usertype == 'adminuser' ?
+              <button className="buttonloginpage" onClick={() => navigate("/clubrequests")}>Club Requests</button>
               : null}
             <br />
             <button className='buttonloginpage' onClick={() => logout()}>Log out</button>
