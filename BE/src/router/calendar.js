@@ -20,7 +20,7 @@ router.post('/insertevent', auth, async (req, res) => {
         console.log(req.body);
         if (isAuthorized) {
             const calendar = new Calendar(req.body);
-            calendar.createdBy = user.name;
+            calendar.createdBy = user.clubName;
             calendar.endtime = setendtime(calendar.starttime, calendar.duration);
             calendar.starttime = setstarttime(calendar.starttime);
             const checkIsAvailable = await Calendar.checkIsAvailable(calendar.date, calendar.starttime, calendar.endtime);

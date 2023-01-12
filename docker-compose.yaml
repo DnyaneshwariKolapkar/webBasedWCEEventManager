@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  mode_frontend:
+    image: node
+    container_name: node_FE
+    working_dir: /app/FE
+    ports:
+      - 3000:3000
+    command: npm start
+
+  node_backend:
+    image: node
+    container_name: node_BE
+    working_dir: /app/BE
+    ports:
+      - 3001:4000
+    command: npm start
+    volumes:
+      - ./:/app

@@ -14,7 +14,6 @@ app.use(express.json({ limit: "10kb" }), cors());
 app.use(userRouter, calendarRouter);
 
 
-
 app.listen(PORT, () => {
     console.log(`Server is lstenining on port ${PORT}`);
 });

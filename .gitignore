@@ -11,3 +11,5 @@ FE/tests
 FE/dockerfile
 BE/dockerfile
 FE/.dockerignore
+BE/.gitignore
+BE/.git

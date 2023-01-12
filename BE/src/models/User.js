@@ -33,10 +33,13 @@ const userSchema = new mongoose.Schema({
     },
     usertype: {
         type: String,
-        enum : ['user', 'clubuser', 'adminuser'],
+        enum: ['user', 'clubuser', 'adminuser'],
         default: 'user'
     },
     clubName: {
+        type: String
+    },
+    clubFile: {
         type: String
     },
     token: {
@@ -70,7 +73,7 @@ const tempClubSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    clubFile : {
+    clubFile: {
         type: String,
         required: true
     },
@@ -78,9 +81,9 @@ const tempClubSchema = new mongoose.Schema({
 
 
 // user information gets some channges before storing it to database
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
     const user = this;
-    if(user.isModified('password')) {
+    if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8);
     }
     next();
@@ -88,18 +91,18 @@ userSchema.pre('save', async function(next) {
 
 
 // generate token for user
-userSchema.methods.generateAuthToken = async function() {
+userSchema.methods.generateAuthToken = async function () {
     const user = this;
-    const token = jwt.sign({_id: user._id}, process.env.SECRET_KEY);
+    const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY);
     user.token = token;
     await user.save();
 }
 
 
 // check if user is verified by user email
-userSchema.statics.isUserVerified = async function(email) {
-    const user = await User.findOne({email: email});
-    if(!user) {
+userSchema.statics.isUserVerified = async function (email) {
+    const user = await User.findOne({ email: email });
+    if (!user) {
         throw new Error('User not found');
     }
     return user.isVerified;
@@ -108,12 +111,12 @@ userSchema.statics.isUserVerified = async function(email) {
 
 //  Login User
 userSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({email: email});
-    if(!user) {
+    const user = await User.findOne({ email: email });
+    if (!user) {
         throw new Error('User not found');
     }
     const isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch) {
+    if (!isMatch) {
         throw new Error('Password is incorrect');
     }
     return user;
@@ -121,7 +124,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 
 // create random string for mail verification
-tempSchema.methods.createString = async function() {
+tempSchema.methods.createString = async function () {
     const temp = this;
     const string = crypto.randomBytes(4).toString('hex');
     temp.randomstring = string;
@@ -131,22 +134,22 @@ tempSchema.methods.createString = async function() {
 
 // after clicking link in mail, it checks for temporary user in Temp schema and if found, it updates the user to verified user
 tempSchema.statics.findForVerification = async function (id, randomstring) {
-    const temp = await Temp.findOne({userID: id, randomstring: randomstring});
-    await Temp.deleteOne({userID: id, randomstring: randomstring});
-    if(!temp){
+    const temp = await Temp.findOne({ userID: id, randomstring: randomstring });
+    await Temp.deleteOne({ userID: id, randomstring: randomstring });
+    if (!temp) {
         console.log('Temp not found');
     }
-    else{
+    else {
         return temp;
     }
 }
 userSchema.statics.VerifyUser = async function (id) {
-    await User.findOneAndUpdate({_id: id}, {isVerified: true});
+    await User.findOneAndUpdate({ _id: id }, { isVerified: true });
     const user = await User.findById(id);
-    if(!user){
+    if (!user) {
         console.log('User not found');
     }
-    else{
+    else {
         console.log('User Verified');
         return user;
     }
@@ -154,42 +157,37 @@ userSchema.statics.VerifyUser = async function (id) {
 
 
 // Promote User to Club User
-userSchema.statics.createClubUser = async function(tempclub, admintoken) {
-    const adminuser = await User.findOne({'tokens.token': admintoken, usertype: 'adminuser'});
-    if(adminuser){
-        await User.findOneAndUpdate({email: tempclub.userEmail, isVerified: true}, {usertype: 'clubuser' , clubNameShort: tempclub.clubNameShort, clubNameLong: tempclub.clubNameLong});
-        const user = await User.findOne({email: tempclub.userEmail, isVerified: true});
-        user.save();
-        if(!user){
-            console.log('User not found');
-        }
-        else{
-            console.log('User Promoted to Club User');
-            return user; 
-        }
+userSchema.statics.createClubUser = async function (tempclub) {
+    const user = await User.findOneAndUpdate({ email: tempclub.userEmail, isVerified: true }, { usertype: 'clubuser', clubName: tempclub.clubName, clubFile: tempclub.clubFile });
+    if (!user) {
+        console.log('User not found');
+    }
+    else {
+        console.log('User Promoted to Club User');
+        return user;
     }
 }
 
 
 // check if user is admin user
-userSchema.statics.isAdminUser = async function(id) {
-    const user = await User.findOne({_id: id, usertype: 'adminuser'});
-    if(!user){
+userSchema.statics.isAdminUser = async function (id) {
+    const user = await User.findOne({ _id: id, usertype: 'adminuser' });
+    if (!user) {
         console.log('not admin user');
     }
-    else{
+    else {
         return true;
     }
 }
 
 
 // check if user is club user
-userSchema.statics.isClubUser = async function(id) {
-    const user = await User.findOne({_id: id, usertype: 'clubuser'});
-    if(!user){
+userSchema.statics.isClubUser = async function (id) {
+    const user = await User.findOne({ _id: id, usertype: 'clubuser' });
+    if (!user) {
         console.log('not club user');
     }
-    else{
+    else {
         return true;
     }
 }
@@ -199,4 +197,4 @@ const User = mongoose.model('User', userSchema);
 const Temp = mongoose.model('Temp', tempSchema);
 const TempClub = mongoose.model('TempClub', tempClubSchema);
 
-module.exports = {User, Temp, TempClub};
+module.exports = { User, Temp, TempClub };

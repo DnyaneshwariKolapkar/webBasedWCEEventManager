@@ -16,7 +16,13 @@ function EditFrom() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const [photo, setPhoto] = useState();
     const date = new Date(data.date);
-    const [newDate, setNewDate] = useState(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+    const formatDate = (date) => {
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = date.getFullYear();
+        return yyyy + '-' + mm + '-' + dd;
+    }
+    const [newDate, setNewDate] = useState(formatDate(date));
 
     // const history = useHistory();
 
@@ -56,7 +62,7 @@ function EditFrom() {
                 const res = await axios.post('http://localhost:5000/editEvent',  newCalendar, { headers: { "Authorization": `Bearer ${user.token.toString()}` } });
                 if (res.status === 200) {
                     alert('Event Updated Successfully');
-                    // navigate('/mainpage');
+                    navigate('/mainpage');
                 }
             }
         }
@@ -65,9 +71,6 @@ function EditFrom() {
         }
     }
 
-    const ChangeDate = (e) => {
-        setNewDate(e.target.value);
-    }
 
 
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -76,12 +79,11 @@ function EditFrom() {
             <div className='insertformbody'>
                 <div>
                     <div className='form'>
-                        {console.log(date)}
                         <h1>Edit Slot on {date.getDate().toString() + " " + month[date.getMonth()] + " " + date.getFullYear().toString()} </h1>
                         <br />
                         <input className='insertformbodyinput' type="text" placeholder="Event Name" value={eventName} onChange={(e) => setEventName(e.target.value)} />
-                        <input type="date" value={newDate} onChange={(e) => ChangeDate(e)} />
-                        <p>{(new Date(new Date(newDate).setHours(0, 0, 0, 0))).toString()}</p>
+                        <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} />
+                        {/* <p>{console.log();}</p> */}
                         <input className='insertformbodyinput' type="time" placeholder="Duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
                         <input className='insertformbodyinput' type="time" placeholder="Start Time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
                         <input className='insertformbodyinput' type="text" placeholder="Event Location" value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} />

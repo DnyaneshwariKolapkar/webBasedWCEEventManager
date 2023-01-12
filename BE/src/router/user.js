@@ -13,7 +13,7 @@ const uploadFile = require('../middleware/fileupload.js');
 
 
 router.get('/', async (req, res) => {
-    res.send("Main Page");
+    res.send("Ritesh's server");
 })
 
 router.post('/users', async (req, res) => {
@@ -174,22 +174,40 @@ router.get('/clubuserRequests', async (req, res) => {
     }
 })
 
-router.post('/user/me/promotetoclubuser/:id', auth, async (req, res) => {
+router.post('/user/me/promotetoclubuser/:response', auth, async (req, res) => {
     try {
-        const email = req.body.email;
-        const tempclub = await TempClub.findOne({ userEmail: email });
-        if (tempclub) {
-            const user = await User.createClubUser(tempclub, req.token);
-            res.send('promoted to club user');
-            if (user) {
+        const user = req.user;
+        if (user.usertype == 'adminuser') {
+            if (req.params.response == 'accept') {
+                const email = req.body.email;
+                const tempclub = await TempClub.findOne({ userEmail: email });
+                if (tempclub) {
+                    const user = await User.createClubUser(tempclub, req.token);
+                    res.send('promoted to club user');
+                    if (user) {
+                        const temp = await TempClub.findOneAndDelete({ userEmail: email });
+                        if (temp) {
+                            console.log('club user request deleted');
+                        }
+                    }
+                }
+                else {
+                    res.send('no request found');
+                }
+            }
+            else if (req.params.response == 'reject') {
+                const email = req.body.email;
                 const temp = await TempClub.findOneAndDelete({ userEmail: email });
                 if (temp) {
-                    console.log('club user request deleted');
+                    res.send('club user request deleted');
+                }
+                else {
+                    res.send('no request found');
                 }
             }
         }
         else {
-            res.send('no request found');
+            res.send('Only admin can promote to club user');
         }
     }
     catch (error) {
@@ -198,23 +216,47 @@ router.post('/user/me/promotetoclubuser/:id', auth, async (req, res) => {
     }
 })
 
-// Temp code 
-router.get('/getuserdetails/:email', async (req, res) => {
+router.get('/current/clubusers', auth, async (req, res) => {
     try {
-        const email = req.params.email;
-        const temp = await User.findOne({ email: email });
-        if (temp) {
-            res.status(200).send(temp);
+        const user = req.user;
+        if (user.usertype == 'adminuser') {
+            const clubusers = await User.find({ usertype: 'clubuser' });
+            res.send(clubusers);
         }
         else {
-            res.status(400).send('user not found');
+            res.send('Only admin can see club users');
         }
     }
     catch (error) {
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).send(error)
     }
-});
+})
 
+router.post('/demoteclubuser', auth, async (req, res) => {
+    try {
+        const user = req.user;
+        if (user.usertype == 'adminuser') {
+            const email = req.body.email;
+            console.log(req.body);
+            const clubuser = await User.findOne({email: email});
+            if(clubuser){
+                clubuser.usertype = 'user';
+                await clubuser.save();
+                res.send('demoted to user');
+            }
+            else{
+                res.send('no club user found');
+            }
+        }
+        else {
+            res.send('Only admin can demote club user');
+        }
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).send(error)
+    }
+})
 
 module.exports = router;

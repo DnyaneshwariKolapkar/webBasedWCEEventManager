@@ -1,11 +1,11 @@
 .insertformbody {
     display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
     background: white;
-	padding: 20px;
+    padding: 20px;
 }
 
 .insertformbodyinput {
@@ -18,5 +18,19 @@
     width: 544px;
     font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
     font-size: 82%;
-    overflow:scroll;
+    overflow: scroll;
 }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #e4e2e2;
+}   

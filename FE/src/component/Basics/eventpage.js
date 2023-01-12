@@ -25,8 +25,8 @@ const Eventpage = () => {
                 <div className="card" style={{ justifyContent: 'middle', width: '100%' }} >
                     <img src={"http://localhost:5000/uploads/eventImages/" + event.eventimage} alt="Avatar" className='card-image' />
                     <div className="container1">
-                        <p className='card-name'>{event.eventname}</p>
-                        <p> <b>About -</b> {event.description} </p>
+                        <p className='card-name'>{event.eventname}  </p>
+                        <p style = {{padding:"0px 20px "}}> <b>About -</b> {event.description} </p> 
                         <p><b>Date - </b> {date} <br /><b>Time - </b>{event.starttime} for {event.duration} Hr</p>
                         <p><i>Organised By <b>{event.createdBy}</b></i> </p>
                     </div>
@@ -36,7 +36,7 @@ const Eventpage = () => {
         )
     }
     const checkuser = (event, eventDate) => {
-        if (user?.usertype === "adminuser" || (event.createdBy === user?.name && eventDate >= new Date(new Date().setHours(0, 0, 0, 0)))) {
+        if (user?.usertype === "adminuser" || (event.createdBy === user?.clubName && eventDate >= new Date(new Date().setHours(0, 0, 0, 0)))) {
             return (
                 <i className="fa fa-edit" style={{ fontSize: '34px', position: 'relative', top: '8px', right: '8px' }} onClick={() => Navigate("/editform", {
                     state: {

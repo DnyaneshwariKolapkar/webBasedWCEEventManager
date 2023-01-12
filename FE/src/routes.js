@@ -7,11 +7,12 @@ import Calendar from "./component/Basics/calendar.js";
 import Eventpage from "./component/Basics/eventpage";
 import Insertform from "./component/Basics/insertform";
 import Profile from "./component/Basics/Profile";
-import ClubUser from "./component/Basics/ClubUser";
+import ApplyforClubUser from "./component/Basics/applyforclubuser";
 import MyEvents from "./component/Basics/myevents";
 import EditFrom from "./component/Basics/editfrom";
 import InsertEvents from "./component/Basics/InsertEvents";
 import ClubRequests from "./component/Basics/clubrequests";
+import Clubusers from "./component/Basics/clubusers";
 
 
 const Router = () => {
@@ -25,13 +26,14 @@ const Router = () => {
         <Route path="Profile" element={<Profile />} />
         <Route path="calendar" element={<Calendar />} />
       </Route>
-      <Route path="/clubUser" element={<ClubUser />} />
+      <Route path="/applyforclubuser" element={<ApplyforClubUser />} />
       <Route path="/insertform" element={<Insertform />} />
       <Route path="/verificartionpage" element={<Verificartionpage />} />
       <Route path="/myevents" element={<MyEvents />} />
       <Route path="/editform" element={<EditFrom />} />
       <Route path="/insertEvents" element={<InsertEvents />} />
       <Route path="/clubrequests" element={<ClubRequests />} />
+      <Route path="/clubusers" element={<Clubusers />} />
     </Routes>
     </>
   )
