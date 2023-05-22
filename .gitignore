@@ -13,3 +13,4 @@ BE/dockerfile
 FE/.dockerignore
 BE/.gitignore
 BE/.git
+FE/build

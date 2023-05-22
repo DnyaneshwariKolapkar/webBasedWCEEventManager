@@ -26,7 +26,7 @@ const Calender = () => {
 
     const getEvents = async (date) => {
         try {
-            const res = await axios.get("http://localhost:5000/getEvents/eventImages/" + (date.toString()));
+            const res = await axios.get("http://localhost:5000/getEvents/" + (date.toString()));
             if (res.status === 200 && res.data.length > 0) {
                 console.log(res.data);
                 setCalendar(res.data);
@@ -46,7 +46,7 @@ const Calender = () => {
         return (
             <>
                 <div className="card" style={{ justifyContent: 'middle' }} >
-                    <img src={"http://localhost:5000/uploads/" + event.eventimage} alt="Avatar" className='card-image' />
+                    <img src={"http://localhost:5000/uploads/eventImages/" + event.eventimage} alt="Avatar" className='card-image' />
                     <div className="container1">
                         <div style={{ maxWidth: "100%", wordWrap: "break-word" }}>
                             <p className='card-name'>{event.eventname}</p>
